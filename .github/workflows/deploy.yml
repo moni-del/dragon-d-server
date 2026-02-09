@@ -39,19 +39,20 @@ jobs:
         PORT: 3000
       run: |
         echo "Building server..."
+        mkdir -p dist
         echo "const express = require('express');" > dist/index.js
         echo "const cors = require('cors');" >> dist/index.js
         echo "const session = require('express-session');" >> dist/index.js
         echo "const { createServer } = require('http');" >> dist/index.js
         echo "" >> dist/index.js
         echo "// Discord OAuth Configuration" >> dist/index.js
-        echo "const DISCORD_CLIENT_ID = '${{ secrets.DISCORD_CLIENT_ID }}';" >> dist/index.js
-        echo "const DISCORD_CLIENT_SECRET = '${{ secrets.DISCORD_CLIENT_SECRET }}';" >> dist/index.js
+        echo "const DISCORD_CLIENT_ID = '$DISCORD_CLIENT_ID';" >> dist/index.js
+        echo "const DISCORD_CLIENT_SECRET = '$DISCORD_CLIENT_SECRET';" >> dist/index.js
         echo "const DISCORD_REDIRECT_URI = 'https://moni-del.github.io/dragon-d-server/auth/discord/callback';" >> dist/index.js
-        echo "const DISCORD_BOT_TOKEN = '${{ secrets.DISCORD_BOT_TOKEN }}';" >> dist/index.js
-        echo "const DISCORD_GUILD_ID = '${{ secrets.DISCORD_GUILD_ID }}';" >> dist/index.js
-        echo "const DISCORD_CHANNEL_ID = '${{ secrets.DISCORD_CHANNEL_ID }}';" >> dist/index.js
-        echo "const SESSION_SECRET = '${{ secrets.SESSION_SECRET }}';" >> dist/index.js
+        echo "const DISCORD_BOT_TOKEN = '$DISCORD_BOT_TOKEN';" >> dist/index.js
+        echo "const DISCORD_GUILD_ID = '$DISCORD_GUILD_ID';" >> dist/index.js
+        echo "const DISCORD_CHANNEL_ID = '$DISCORD_CHANNEL_ID';" >> dist/index.js
+        echo "const SESSION_SECRET = '$SESSION_SECRET';" >> dist/index.js
         echo "" >> dist/index.js
         echo "// Import server code" >> dist/index.js
         echo "const app = require('./index.js');" >> dist/index.js
