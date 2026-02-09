@@ -38,32 +38,29 @@ jobs:
         SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
         PORT: 3000
       run: |
-        echo "Building server..."
+        echo "Building static API server..."
         mkdir -p dist
-        echo "const express = require('express');" > dist/index.js
-        echo "const cors = require('cors');" >> dist/index.js
-        echo "const session = require('express-session');" >> dist/index.js
-        echo "const { createServer } = require('http');" >> dist/index.js
-        echo "" >> dist/index.js
-        echo "// Discord OAuth Configuration" >> dist/index.js
-        echo "const DISCORD_CLIENT_ID = '$DISCORD_CLIENT_ID';" >> dist/index.js
-        echo "const DISCORD_CLIENT_SECRET = '$DISCORD_CLIENT_SECRET';" >> dist/index.js
-        echo "const DISCORD_REDIRECT_URI = 'https://moni-del.github.io/dragon-d-server/auth/discord/callback';" >> dist/index.js
-        echo "const DISCORD_BOT_TOKEN = '$DISCORD_BOT_TOKEN';" >> dist/index.js
-        echo "const DISCORD_GUILD_ID = '$DISCORD_GUILD_ID';" >> dist/index.js
-        echo "const DISCORD_CHANNEL_ID = '$DISCORD_CHANNEL_ID';" >> dist/index.js
-        echo "const SESSION_SECRET = '$SESSION_SECRET';" >> dist/index.js
-        echo "" >> dist/index.js
-        echo "// Import server code" >> dist/index.js
-        echo "const app = require('./index.js');" >> dist/index.js
-        echo "" >> dist/index.js
-        echo "// Create HTTP server" >> dist/index.js
-        echo "const server = createServer(app);" >> dist/index.js
-        echo "" >> dist/index.js
-        echo "// Start server" >> dist/index.js
-        echo "server.listen(3000, () => {" >> dist/index.js
-        echo "  console.log('Server running on port 3000');" >> dist/index.js
-        echo "});" >> dist/index.js
+        
+        # Create API endpoints as static JSON responses
+        echo '{"status": {"loggedIn": false, "user": null}}' > dist/api/status.json
+        echo '{"callback": {"success": false, "error": "Not implemented"}}' > dist/api/auth/discord/callback.json
+        
+        # Create index.html for GitHub Pages
+        echo '<!DOCTYPE html>' > dist/index.html
+        echo '<html>' >> dist/index.html
+        echo '<head>' >> dist/index.html
+        echo '<title>DT_STORE API</title>' >> dist/index.html
+        echo '<meta charset="utf-8">' >> dist/index.html
+        echo '</head>' >> dist/index.html
+        echo '<body>' >> dist/index.html
+        echo '<h1>DT_STORE API Server</h1>' >> dist/index.html
+        echo '<p>API endpoints:</p>' >> dist/index.html
+        echo '<ul>' >> dist/index.html
+        echo '<li><a href="/api/status.json">/api/status</a></li>' >> dist/index.html
+        echo '<li><a href="/api/auth/discord/callback.json">/api/auth/discord/callback</a></li>' >> dist/index.html
+        echo '</ul>' >> dist/index.html
+        echo '</body>' >> dist/index.html
+        echo '</html>' >> dist/index.html
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
