@@ -39,7 +39,7 @@ jobs:
         PORT: 3000
       run: |
         echo "Building static API server..."
-        mkdir -p dist/api
+        mkdir -p dist/api/auth/discord
         
         # Create API endpoints as static JSON responses
         echo '{"status": {"loggedIn": false, "user": null}}' > dist/api/status.json
